@@ -1,0 +1,11 @@
+{
+  "name": "se_project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node src/app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.0"
+  }
+}
