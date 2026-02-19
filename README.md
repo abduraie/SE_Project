@@ -1,24 +1,47 @@
 # Skill Exchange API
 
-Minimal Node.js + Express scaffold for the Software Engineering group project.
+This repository contains the backend scaffold for our Software Engineering group project: a Skill Exchange platform.
 
-## Requirements
+The goal of the system is to allow users to offer their skills and connect with others who need specific services.  
+This version represents the initial Node.js + Express scaffold created for Sprint 1.
 
-- Node.js 18 LTS
+---
+
+## Project Purpose
+
+The Skill Exchange platform is designed as a lightweight system where users can discover and communicate with people who provide useful skills (for example tutoring, technical help, design, etc.).
+
+At this stage, the repository only includes the minimal backend structure required to support the development workflow.
+
+---
+
+## Tech Stack
+
+- Node.js (18 LTS)
+- Express.js
+- Docker
+
+---
 
 ## Local Development
 
-```bash
-npm install
-npm run dev
-```
+Requires Node.js 18 LTS.
 
-The server will start on port 3000 (or `process.env.PORT` if provided).
+npm install  
+npm run dev  
 
-## Docker
+The server will start on port 3000 (or process.env.PORT if provided).
 
-Docker will run the same command:
+---
 
-```bash
+## Running with Docker
+
+Make sure Docker Desktop is installed and running.
+
+From the project root directory:
+
 docker compose up --build
-```
+
+Then open:
+
+http://localhost:3000
