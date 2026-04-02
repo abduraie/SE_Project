@@ -1,0 +1,59 @@
+//- ============================================================================
+//- Listings Page
+//- ============================================================================
+//- Displays all active skill listings with category filtering
+//- Implements US1 (View Listings) and US2 (Filter Listings)
+//- ============================================================================
+
+extends layout
+
+block content
+  .page-header
+      .container
+            h1 Browse Skill Listings
+                  p Discover opportunities to exchange skills and collaborate with others
+
+                    .container
+                        .filter-section
+                              form.filter-form(method="GET", action="/listings")
+                                      label(for="category") Filter by Category:
+                                              select#category(name="category", onchange="this.form.submit()")
+                                                        option(value="", selected=!selectedCategory) All Categories
+                                                                  each category in categories
+                                                                              option(value=category.id, selected=selectedCategory==category.id)= category.name
+
+                                                                                  .listings-grid
+                                                                                        if listings && listings.length > 0
+                                                                                                each listing in listings
+                                                                                                          .listing-card
+                                                                                                                      .listing-header
+                                                                                                                                    span.category-badge= listing.category_name
+                                                                                                                                                  span.views #{listing.views} views
+                                                                                                                                                  
+                                                                                                                                                              h3.listing-title
+                                                                                                                                                                            a(href=`/listings/${listing.id}`)= listing.title
+                                                                                                                                                                            
+                                                                                                                                                                                        p.listing-description= listing.description.substring(0, 150) + '...'
+                                                                                                                                                                                        
+                                                                                                                                                                                                    .listing-meta
+                                                                                                                                                                                                                  .user-info
+                                                                                                                                                                                                                                  span Posted by
+                                                                                                                                                                                                                                                  a(href=`/users/${listing.user_id}`)= listing.user_name
+                                                                                                                                                                                                                                                                  if listing.user_rating
+                                                                                                                                                                                                                                                                                    span.rating #{listing.user_rating}
+                                                                                                                                                                                                                                                                                    
+                                                                                                                                                                                                                                                                                                  span.date= new Date(listing.created_at).toLocaleDateString()
+                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                              if listing.skills_offered && listing.skills_offered.length > 0
+                                                                                                                                                                                                                                                                                                                            .skills-tags
+                                                                                                                                                                                                                                                                                                                                            each skill in listing.skills_offered.slice(0, 3)
+                                                                                                                                                                                                                                                                                                                                                              span.skill-tag= skill
+                                                                                                                                                                                                                                                                                                                                                                              if listing.skills_offered.length > 3
+                                                                                                                                                                                                                                                                                                                                                                                                span.skill-tag +#{listing.skills_offered.length - 3} more
+                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                            a.btn.btn-secondary(href=`/listings/${listing.id}`) View Details
+                                                                                                                                                                                                                                                                                                                                                                                                                  else
+                                                                                                                                                                                                                                                                                                                                                                                                                          .empty-state
+                                                                                                                                                                                                                                                                                                                                                                                                                                    p No listings found for the selected category.
+                                                                                                                                                                                                                                                                                                                                                                                                                                              a.btn.btn-primary(href="/listings") View All Listings
+                                                                                                                                                                                                                                                                                                                                                                                                                                              
