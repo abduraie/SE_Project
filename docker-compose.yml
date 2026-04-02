@@ -34,8 +34,6 @@ services:
       MYSQL_DATABASE: se_project
       MYSQL_USER: appuser
       MYSQL_PASSWORD: apppassword
-    ports:
-      - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./database/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
@@ -49,3 +47,4 @@ services:
 
 volumes:
   mysql_data:
+
