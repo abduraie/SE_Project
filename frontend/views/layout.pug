@@ -1,0 +1,37 @@
+//- ============================================================================
+//- Base Layout Template
+//- ============================================================================
+//- This template defines the common structure shared across all pages
+//- including navigation, header, and footer
+//- ============================================================================
+
+doctype html
+html(lang="en")
+  head
+      meta(charset="UTF-8")
+          meta(name="viewport", content="width=device-width, initial-scale=1.0")
+              title= title || 'Skill Exchange Platform'
+                  link(rel="stylesheet", href="/css/style.css")
+
+                    body
+                        //- Navigation header
+                            header.header
+                                  .container
+                                          .header-content
+                                                    .logo
+                                                                a(href="/") Skill Exchange
+
+                                                                          nav.nav
+                                                                                      a.nav-link(href="/listings") Listings
+                                                                                                  a.nav-link(href="/users") Users
+                                                                                                              a.nav-link.btn-primary(href="/create-listing") Create Listing
+                                                                                                              
+                                                                                                                  //- Main content area (populated by child templates)
+                                                                                                                      main.main-content
+                                                                                                                            block content
+                                                                                                                            
+                                                                                                                                //- Footer
+                                                                                                                                    footer.footer
+                                                                                                                                          .container
+                                                                                                                                                  p &copy; 2026 Skill Exchange Platform | Software Engineering Project
+                                                                                                                                                  
