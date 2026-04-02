@@ -1,11 +1,29 @@
 {
-  "name": "se_project",
+  "name": "skill-exchange-platform",
   "version": "1.0.0",
-  "private": true,
+  "description": "A collaborative skill exchange platform for Sprint 3",
+  "main": "backend/app.js",
   "scripts": {
-    "dev": "node src/app.js"
+    "start": "node backend/app.js",
+    "dev": "nodemon backend/app.js",
+    "init-db": "mysql -u root -p < database/schema.sql && mysql -u root -p < database/seed.sql"
   },
+  "keywords": [
+    "skill-exchange",
+    "collaboration",
+    "education"
+  ],
+  "author": "Skill Exchange Team",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.19.0"
+    "express": "^4.18.2",
+    "mysql2": "^3.6.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
