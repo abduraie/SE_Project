@@ -1,0 +1,43 @@
+//- ============================================================================
+//- Home Page
+//- ============================================================================
+//- Landing page that welcomes users and provides quick navigation
+//- ============================================================================
+
+extends layout
+
+block content
+  .hero
+      .container
+            h1.hero-title Welcome to Skill Exchange Platform
+                  p.hero-subtitle Connect with peers, exchange skills, and grow together through collaborative learning
+
+                        .hero-actions
+                                a.btn.btn-primary.btn-large(href="/listings") Browse Skills
+                                        a.btn.btn-secondary.btn-large(href="/users") Find Collaborators
+
+                                          .features
+                                              .container
+                                                    .feature-grid
+                                                            .feature-card
+                                                                      h3 Share Your Skills
+                                                                                p Offer your expertise and help others learn while building meaningful connections
+
+                                                                                        .feature-card
+                                                                                                  h3 Learn New Skills
+                                                                                                            p Find experienced collaborators who can teach you the skills you want to master
+                                                                                                            
+                                                                                                                    .feature-card
+                                                                                                                              h3 Build Together
+                                                                                                                                        p Work on real projects and gain practical experience through peer collaboration
+                                                                                                                                        
+                                                                                                                                                .feature-card
+                                                                                                                                                          h3 Grow Your Network
+                                                                                                                                                                    p Connect with motivated learners and professionals in your field of interest
+                                                                                                                                                                    
+                                                                                                                                                                      .cta-section
+                                                                                                                                                                          .container
+                                                                                                                                                                                h2 Ready to Start Exchanging Skills?
+                                                                                                                                                                                      p Join our community of collaborative learners today
+                                                                                                                                                                                            a.btn.btn-primary.btn-large(href="/create-listing") Create Your First Listing
+                                                                                                                                                                                            
