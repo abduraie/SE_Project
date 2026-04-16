@@ -1,0 +1,108 @@
+/- Users Page
+extends layout
+
+block content
+  .container
+    .page-header
+      h1 Community Members
+      p.subtitle Connect with skilled professionals in our community
+
+    .search-filter-bar
+      .search-box
+        input.search-input(type="text" placeholder="Search users..." id="userSearch")
+      .filter-group
+        select.filter-select(id="skillFilter")
+          option(value="") All Skills
+          option(value="web") Web Development
+          option(value="design") Design
+          option(value="mobile") Mobile Development
+          option(value="data") Data Science
+          option(value="marketing") Marketing
+          option(value="writing") Writing
+
+    if users && users.length > 0
+      .users-grid#usersGrid
+        each user in users
+          .user-card
+            .user-card-header
+              .user-avatar
+                if user.avatar_url
+                  img(src=user.avatar_url alt=user.username)
+                else
+                  .avatar-placeholder= user.username.charAt(0).toUpperCase()
+              .user-status-badge(class=user.is_active ? 'active' : 'inactive')
+                span= user.is_active ? 'Active' : 'Inactive'
+
+            .user-card-body
+              h3.user-name= user.full_name || user.username
+              p.user-username @#{user.username}
+
+              if user.bio
+                p.user-bio= user.bio
+
+              if user.location
+                .user-location
+                  span.location-icon 📍
+                  span= user.location
+
+              .user-stats
+                .stat
+                  span.stat-number= user.listing_count || 0
+                  span.stat-label Listings
+                .stat
+                  span.stat-number= user.exchange_count || 0
+                  span.stat-label Exchanges
+                .stat
+                  span.stat-number= user.rating ? user.rating.toFixed(1) : 'N/A'
+                  span.stat-label Rating
+
+              if user.skills && user.skills.length > 0
+                .user-skills
+                  h4 Skills
+                  .skills-tags
+                    each skill in user.skills.slice(0, 4)
+                      span.skill-tag= skill
+                    if user.skills.length > 4
+                      span.skill-tag.more +#{user.skills.length - 4} more
+
+            .user-card-footer
+              a.btn.btn-outline(href="/users/" + user.id) View Profile
+              a.btn.btn-primary(href="/listings?user=" + user.id) See Listings
+
+    else
+      .empty-state
+        .empty-icon 👥
+        h2 No users found
+        p Try adjusting your search or filters
+        a.btn.btn-primary(href="/listings") Browse Listings
+
+    if totalPages && totalPages > 1
+      .pagination
+        if currentPage > 1
+          a.page-btn(href="?page=" + (currentPage - 1)) Previous
+        each pageNum in Array.from({length: totalPages}, (_, i) => i + 1)
+          a.page-btn(href="?page=" + pageNum class=pageNum === currentPage ? 'active' : '')= pageNum
+        if currentPage < totalPages
+          a.page-btn(href="?page=" + (currentPage + 1)) Next
+
+  script.
+    const searchInput = document.getElementById('userSearch');
+    const skillFilter = document.getElementById('skillFilter');
+    const usersGrid = document.getElementById('usersGrid');
+
+    function filterUsers() {
+      const query = searchInput.value.toLowerCase();
+      const skill = skillFilter.value.toLowerCase();
+      const cards = usersGrid ? usersGrid.querySelectorAll('.user-card') : [];
+      cards.forEach(card => {
+        const name = card.querySelector('.user-name').textContent.toLowerCase();
+        const username = card.querySelector('.user-username').textContent.toLowerCase();
+        const skillTags = Array.from(card.querySelectorAll('.skill-tag')).map(t => t.textContent.toLowerCase());
+        const matchQuery = !query || name.includes(query) || username.includes(query);
+        const matchSkill = !skill || skillTags.some(s => s.includes(skill));
+        card.style.display = matchQuery && matchSkill ? '' : 'none';
+      });
+    }
+
+    if (searchInput) searchInput.addEventListener('input', filterUsers);
+    if (skillFilter) skillFilter.addEventListener('change', filterUsers);

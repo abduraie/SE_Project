@@ -1,0 +1,104 @@
+//- Create Listing Page
+extends layout
+
+block content
+  .container
+    .page-header
+      h1 Create a New Listing
+      p.subtitle Share your skills and find what you need
+
+    .form-layout
+      form.listing-form#createListingForm(action="/listings" method="POST")
+        .form-section
+          h2 Basic Information
+          .form-group
+            label.form-label(for="title") Listing Title *
+            input.form-input(type="text" id="title" name="title" placeholder="e.g. Web Developer offering React skills" required maxlength="100")
+            span.char-count#titleCount 0/100
+          .form-group
+            label.form-label(for="category") Category *
+            select.form-select(id="category" name="category_id" required)
+              option(value="") Select a category...
+              if categories
+                each cat in categories
+                  option(value=cat.id)= cat.name
+          .form-group
+            label.form-label(for="description") Description *
+            textarea.form-textarea(id="description" name="description" rows="5" placeholder="Describe what you're offering..." required maxlength="2000")
+            span.char-count#descCount 0/2000
+
+        .form-section
+          h2 Skills Exchange
+          .skills-exchange-grid
+            .skills-col
+              label.form-label Skills You're Offering *
+              .skills-input-group
+                input.form-input(type="text" id="skillOfferedInput" placeholder="Add a skill (press Enter)")
+                button.btn.btn-sm(type="button" id="addOfferedSkill") Add
+              .skills-tags#offeredSkillsTags
+              input(type="hidden" name="skills_offered" id="skillsOfferedHidden")
+            .skills-col
+              label.form-label Skills You're Looking For *
+              .skills-input-group
+                input.form-input(type="text" id="skillWantedInput" placeholder="Add a skill (press Enter)")
+                button.btn.btn-sm(type="button" id="addWantedSkill") Add
+              .skills-tags#wantedSkillsTags
+              input(type="hidden" name="skills_wanted" id="skillsWantedHidden")
+
+        .form-section
+          h2 Collaboration Details
+          .form-row
+            .form-group
+              label.form-label(for="experienceLevel") Experience Level
+              select.form-select(id="experienceLevel" name="experience_level")
+                option(value="") Any level
+                option(value="beginner") Beginner
+                option(value="intermediate") Intermediate
+                option(value="advanced") Advanced
+                option(value="expert") Expert
+            .form-group
+              label.form-label(for="timeCommitment") Time Commitment
+              select.form-select(id="timeCommitment" name="time_commitment")
+                option(value="") Flexible
+                option(value="1-5hrs") 1-5 hours/week
+                option(value="5-10hrs") 5-10 hours/week
+                option(value="10-20hrs") 10-20 hours/week
+                option(value="20+hrs") 20+ hours/week
+          .form-group
+            label.form-label(for="duration") Project Duration
+            select.form-select(id="duration" name="duration")
+              option(value="") Open-ended
+              option(value="1-week") 1 week
+              option(value="1-month") 1 month
+              option(value="3-months") 3 months
+              option(value="ongoing") Ongoing
+          .form-group
+            .toggle-group
+              input.toggle-input(type="checkbox" id="remoteOk" name="remote_ok" value="true" checked)
+              label.toggle-label(for="remoteOk") Open to remote collaboration
+
+        .form-actions
+          button.btn.btn-outline(type="button" onclick="history.back()") Cancel
+          button.btn.btn-primary(type="submit") Create Listing
+
+  script.
+    const titleInput = document.getElementById('title');
+    const descInput = document.getElementById('description');
+    const titleCount = document.getElementById('titleCount');
+    const descCount = document.getElementById('descCount');
+    titleInput.addEventListener('input', () => { titleCount.textContent = titleInput.value.length + '/100'; });
+    descInput.addEventListener('input', () => { descCount.textContent = descInput.value.length + '/2000'; });
+    function createSkillsManager(inputId, addBtnId, tagsId, hiddenId) {
+      const input = document.getElementById(inputId);
+      const addBtn = document.getElementById(addBtnId);
+      const tagsContainer = document.getElementById(tagsId);
+      const hidden = document.getElementById(hiddenId);
+      let skills = [];
+      function renderTags() {
+        tagsContainer.innerHTML = '';
+        skills.forEach((skill, i) => {
+          const tag = document.createElement('span');
+          tag.className = 'skill-tag removable';
+          tag.innerHTML = skill + '<button type="button" class="remove-tag" data-index="' + i + '">x</button>';
+          tagsContainer.appendChild(tag);
+        });
