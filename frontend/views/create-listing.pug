@@ -8,9 +8,16 @@ block content
       p.subtitle Share your skills and find what you need
 
     .form-layout
-      form.listing-form#createListingForm(action="/listings" method="POST")
+      form.listing-form#createListingForm(action="/create-listing" method="POST")
         .form-section
           h2 Basic Information
+          .form-group
+            label.form-label(for="user_id") Posting As *
+            select.form-select(id="user_id" name="user_id" required)
+              option(value="") Select a user...
+              if users
+                each u in users
+                  option(value=u.id)= u.name
           .form-group
             label.form-label(for="title") Listing Title *
             input.form-input(type="text" id="title" name="title" placeholder="e.g. Web Developer offering React skills" required maxlength="100")
@@ -102,3 +109,29 @@ block content
           tag.innerHTML = skill + '<button type="button" class="remove-tag" data-index="' + i + '">x</button>';
           tagsContainer.appendChild(tag);
         });
+        hidden.value = skills.join(',');
+        tagsContainer.querySelectorAll('.remove-tag').forEach(btn => {
+          btn.addEventListener('click', () => {
+            skills.splice(Number(btn.dataset.index), 1);
+            renderTags();
+          });
+        });
+      }
+      function addSkill() {
+        const val = input.value.trim();
+        if (val && !skills.includes(val)) {
+          skills.push(val);
+          input.value = '';
+          renderTags();
+        }
+      }
+      addBtn.addEventListener('click', addSkill);
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addSkill();
+        }
+      });
+    }
+    createSkillsManager('skillOfferedInput', 'addOfferedSkill', 'offeredSkillsTags', 'skillsOfferedHidden');
+    createSkillsManager('skillWantedInput', 'addWantedSkill', 'wantedSkillsTags', 'skillsWantedHidden');

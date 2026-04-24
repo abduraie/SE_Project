@@ -1,11 +1,11 @@
-
+{
   "name": "skill-exchange-platform",
   "version": "1.0.0",
   "description": "A collaborative skill exchange platform for Sprint 3",
-  "main": "backend/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node backend/app.js",
-    "dev": "nodemon backend/app.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "init-db": "mysql -u root -p < database/schema.sql && mysql -u root -p < database/seed.sql"
   },
   "keywords": [
@@ -26,4 +26,4 @@
   "engines": {
     "node": ">=18.0.0"
   }
-
+}

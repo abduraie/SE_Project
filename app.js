@@ -22,11 +22,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files (CSS, images, client-side JavaScript)
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure PUG as the template engine
 app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, '../frontend/views'));
+app.set('views', path.join(__dirname, 'frontend/views'));
 
 // ============================================================================
 // API Routes
